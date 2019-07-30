@@ -115,6 +115,11 @@ func (bag *Bag) Summarize(text string, num int) ([]string, error) {
 
 	bag.createSentences(text) // only actually creates sentences if no OrignalSentences
 
+	// optimization for case when text contains [1..num] sentences
+	if len(bag.OriginalSentences) > 0 && len(bag.OriginalSentences) <= num {
+		return bag.OriginalSentences, nil
+	}
+
 	// If user already provide dictionary, pass creating dictionary
 	if len(bag.Dict) < 1 {
 		if text == "" {
