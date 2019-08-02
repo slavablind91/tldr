@@ -20,6 +20,11 @@ func TokenizeSentences(text string) []string {
 
 	// [][]int
 	idxMap := sentenceTokenizer.FindAllStringIndex(text, -1)
+	
+	// in this case we just return all text as 1 sentence
+	if len(idxMap) == 0 && text != "" {
+		return []string{text}
+	}
 
 	// cut by guide
 	from := 0
