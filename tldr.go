@@ -30,6 +30,7 @@ type Bag struct {
 	Tolerance                  float64
 	Threshold                  float64
 	SentencesDistanceThreshold float64
+	SentencesLimit             uint
 
 	customAlgorithm func(e []*Edge) []int
 	customWeighing  func(src, dst []int) float64
@@ -53,6 +54,7 @@ const (
 	DEFAULT_THRESHOLD                    = 0.001
 	DEFAULT_MAX_CHARACTERS               = 0
 	DEFAULT_SENTENCES_DISTANCE_THRESHOLD = 0.95
+	DEFAULT_SENTENCES_LIMIT              = 500
 )
 
 func defaultWordTokenizer(sentence string) []string {
@@ -73,6 +75,7 @@ func New() *Bag {
 		Tolerance:                  DEFAULT_TOLERANCE,
 		Threshold:                  DEFAULT_THRESHOLD,
 		SentencesDistanceThreshold: DEFAULT_SENTENCES_DISTANCE_THRESHOLD,
+		SentencesLimit:             DEFAULT_SENTENCES_LIMIT,
 		wordTokenizer:              defaultWordTokenizer,
 	}
 }
@@ -330,7 +333,7 @@ func (bag *Bag) createSentences(text string) {
 		// done by calling func: text = strings.TrimSpace(text)
 		// tokenize text as sentences
 		// sentence is a group of words separated by whitespaces or punctuation other than !?.
-		bag.OriginalSentences = TokenizeSentences(text)
+		bag.OriginalSentences = TokenizeSentences(text, bag.SentencesLimit)
 	}
 
 	// from original sentences, explode each sentences into bag of words

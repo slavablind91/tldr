@@ -1,13 +1,12 @@
 package tldr_test
 
 import (
-	. "github.com/JesusIslam/tldr"
-
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
-
 	"io/ioutil"
 	"strings"
+
+	. "github.com/JesusIslam/tldr"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
 var (

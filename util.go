@@ -13,13 +13,17 @@ func init() {
 	sentenceTokenizer = regexp.MustCompile(`([\.\?\!])(?:\s|$)`)
 }
 
-func TokenizeSentences(text string) []string {
+func TokenizeSentences(text string, limit uint) []string {
 	tokens := []string{}
 
 	text = strings.TrimSpace(text)
 
 	// [][]int
 	idxMap := sentenceTokenizer.FindAllStringIndex(text, -1)
+
+	if uint(len(idxMap)) > limit {
+		idxMap = idxMap[:limit]
+	}
 	
 	// in this case we just return all text as 1 sentence
 	if len(idxMap) == 0 && text != "" {
